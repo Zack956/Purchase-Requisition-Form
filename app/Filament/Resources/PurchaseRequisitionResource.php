@@ -67,6 +67,22 @@ class PurchaseRequisitionResource extends Resource
                             $set('remaining_budget', 'MYR ' . number_format($remaining, 2));
                     }
                 }),
+
+                Forms\Components\Select::make('vendor_id')
+    ->label('Vendor')
+    ->relationship('vendor', 'name')
+    ->searchable()
+    ->preload()
+    ->createOptionForm([
+        Forms\Components\TextInput::make('name')
+            ->required(),
+        // Add other vendor fields as needed
+    ])
+    ->createOptionAction(function (Action $action) {
+        return $action
+            ->modalHeading('Create New Vendor')
+            ->modalWidth('lg');
+    }),
                 
             Forms\Components\TextInput::make('current_budget')
                 ->label('Current Month Budget')
@@ -155,6 +171,11 @@ class PurchaseRequisitionResource extends Resource
                     
                 Forms\Components\Textarea::make('remarks')
                     ->columnSpanFull(),
+
+                Forms\Components\Select::make('vendor_id')
+                    ->label('Vendor')
+                    ->relationship('vendor', 'name')
+                    ->required(),
                     
                 Forms\Components\Select::make('status')
                     ->options([
@@ -241,6 +262,11 @@ protected function afterSave(): void
                     ->searchable(),
                 Tables\Columns\TextColumn::make('department')
                     ->searchable(),
+
+                Tables\Columns\TextColumn::make('vendor.name')
+                    ->label('Vendor')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('total_amount')
                     ->formatStateUsing(fn ($state) => 'MYR ' . number_format($state, 2))
                     ->label('Total Amount'),

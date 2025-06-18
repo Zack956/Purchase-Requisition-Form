@@ -28,6 +28,11 @@ class PurchaseRequisition extends Model
         return $this->hasMany(QuotationAttachment::class, 'purchase_requisition_id');
     }
 
+    public function vendor()
+{
+    return $this->belongsTo(Vendor::class);
+}
+
     public function departmentBudget()
     {
         return $this->belongsTo(DepartmentBudget::class, 'department', 'department');
