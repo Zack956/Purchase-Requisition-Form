@@ -17,6 +17,8 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Tables\Columns\TextColumn;
 
+
+//Jackwan Skelleton brain
 class PurchaseRequisitionResource extends Resource
 {
     protected static ?string $model = PurchaseRequisition::class;
@@ -183,12 +185,12 @@ class PurchaseRequisitionResource extends Resource
 
 protected function afterCreate(): void
 {
-    // No need to deduct here - we'll handle in afterSave()
+    //
 }
 
 protected function afterSave(): void
 {
-    // Only deduct when status changes to approved
+    // Budget deduct when status change to approve
     if ($this->record->wasChanged('status') && $this->record->status === 'approved') {
         BudgetService::deductFromBudget(
             $this->record->department,
@@ -261,7 +263,7 @@ protected function afterSave(): void
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 
-                // Existing PDF download action (for requisition form)
+                // PDF download
                 Tables\Actions\Action::make('download_requisition')
                     ->label('Download PR')
                     ->icon('heroicon-o-document-arrow-down')
@@ -276,7 +278,7 @@ protected function afterSave(): void
                         );
                     }),
                 
-                // New action for viewing quotations
+                // View PDF quotation
                 Tables\Actions\Action::make('view_quotations')
     ->label('View Quotes')
     ->icon('heroicon-o-document-magnifying-glass')
