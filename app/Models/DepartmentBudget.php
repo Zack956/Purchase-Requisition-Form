@@ -22,6 +22,12 @@ class DepartmentBudget extends Model
         return $this->hasMany(PurchaseRequisition::class);
     }
 
+    public function scopeForDepartment($query, string $department)
+{
+    return $query->where('department', $department)
+        ->where('month_year', now()->format('Y-m-01'));
+}
+
     public function deductAmount($amount)
     {
         $this->remaining_amount -= $amount;
