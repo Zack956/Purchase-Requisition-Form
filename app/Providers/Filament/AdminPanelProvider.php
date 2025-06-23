@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use Filament\Http\Middleware\Authenticate;
-use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
@@ -26,14 +25,14 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login()  // Allow login for all authenticated users
             ->colors([
                 'primary' => Color::Amber,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->resources([
                 \App\Filament\Resources\DepartmentBudgetResource::class,
-                // ...
+                // Add other resources here
             ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -49,7 +48,6 @@ class AdminPanelProvider extends PanelProvider
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
-                AuthenticateSession::class,
                 ShareErrorsFromSession::class,
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,
@@ -58,8 +56,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authGuard('web')
             ->authMiddleware([
-                Authenticate::class,
-                \Spatie\Permission\Middleware\RoleMiddleware::using('admin'),
+                Authenticate::class,  // Only checks if user is logged in (no role restriction)
             ]);
     }
 }

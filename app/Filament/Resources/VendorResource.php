@@ -50,6 +50,17 @@ class VendorResource extends Resource
     {
         return $table
             ->columns([
+
+                Tables\Columns\TextColumn::make('name')
+                ->label('Vendor Name'),
+
+                Tables\Columns\TextColumn::make('contact person')
+                ->label('Contact Person'),
+
+                Tables\Columns\TextColumn::make('email')
+                ->label('Email'),
+
+
                 //
             ])
             ->filters([

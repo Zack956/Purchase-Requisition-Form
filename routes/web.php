@@ -13,3 +13,6 @@ Route::get('/test-db', function() {
         return "Connection failed: " . $e->getMessage();
     }
 });
+
+Route::get('/download-quotations/{pr}', \App\Http\Controllers\DownloadQuotationsController::class)
+    ->name('filament.download-all');

@@ -65,6 +65,10 @@ class DepartmentBudgetResource extends Resource
                 ->options([
                     'IT' => 'IT',
                     'Purchasing' => 'Purchasing',
+                    'HR' => 'HR',
+                    'Business Control' => 'Business Control',
+                    'Production Engineering' => 'Production Engineering',
+                    'Maintenance' => 'Maintenance',
                     // ... other departments
                 ]),
             Tables\Filters\Filter::make('month_year')

@@ -23,15 +23,14 @@ class PurchaseRequisition extends Model
         'request_date' => null, // Temporary fix for development
     ];
 
-    public function quotationAttachments(): HasMany
-    {
-        return $this->hasMany(QuotationAttachment::class, 'purchase_requisition_id');
+    public function quotationAttachments() {
+        return $this->hasMany(QuotationAttachment::class);
     }
 
     public function vendor()
-{
-    return $this->belongsTo(Vendor::class);
-}
+    {
+        return $this->belongsTo(\App\Models\Vendor::class, 'vendor_id', 'id');
+    }
 
     public function departmentBudget()
     {
